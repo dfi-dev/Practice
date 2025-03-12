@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+    overflow-x: hidden;
+}
+
+/*hide password eye icon*/
+input[type="password"]::-ms-reveal{
+    display: none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0; /* Hide the default icon */
+    position: absolute;
+    right: 0;
+    width: 100%;
+}
+
+
