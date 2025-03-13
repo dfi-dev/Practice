@@ -1,8 +1,8 @@
 import { PiSealCheckFill, PiSealWarningFill } from "react-icons/pi";
 
 
-export default function InputField({ name,type, placeholder, icon, value, onChange, error, shouldValidate = true, onHover}) {
-    const [hoveredField, setHoveredField] = onHover;
+export default function InputField({ name,type, placeholder, icon, value, onChange, error, shouldValidate = true, onHover = []}) {
+    const [hoveredField, setHoveredField] = Array.isArray(onHover) ? onHover : [null, () => {}];
     return (
         <div className="relative">
             {/* Show error tooltip only if shouldValidate is true */}

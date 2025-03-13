@@ -1,8 +1,8 @@
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";;
 import {PiSealCheckFill, PiSealWarningFill} from "react-icons/pi";
 
-export default function PasswordField({ name, value, onChange, error, onHover, togglePassword, shouldValidate = true, showPassword}) {
-    const [hoveredField, setHoveredField] = onHover;
+export default function PasswordField({ name, value, onChange, error, togglePassword, showPassword, shouldValidate = true, onHover = [] }) {
+    const [hoveredField, setHoveredField] = Array.isArray(onHover) ? onHover : [null, () => {}];
 
     return (
         <div className="relative">

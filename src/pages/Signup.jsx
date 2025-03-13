@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import { motion } from "framer-motion";
 import {FaGithub, FaUser, FaEnvelope, FaPhone,FaMapMarkerAlt, FaVenusMars, FaTint, FaAt, FaCaretLeft, FaCalendarAlt} from "react-icons/fa";
 import {IoMdSend} from "react-icons/io";
@@ -11,18 +11,12 @@ import {validateForm} from "../utils/validateForm.js";
 import SocialButton from "../components/SocialButton.jsx";
 
 export default function Signup() {
-    const [formData, setFormData] = useState({
-        fullName: "",
-        username: "",
-        email: "",
-        phone: "",
-        password: "",
-        dob: "",
-        gender: "",
-        address: "",
-        bloodGroup: "",
-    });
+    const formInitialState = useMemo(() => ({
+        fullName: "", username: "", email: "", phone: "",
+        password: "", dob: "", gender: "", address: "", bloodGroup: ""
+    }), []);
 
+    const [formData, setFormData] = useState(formInitialState);
     const [step, setStep] = useState(1);
     const [showCheck, setShowCheck] = useState(false);
     const [startAnimation, setStartAnimation] = useState(false);
@@ -31,63 +25,50 @@ export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
 
 
-    const handleChange = (e) => {
+    const handleChange = useCallback((e) => {
         const { name, value } = e.target;
-
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value
-        }));
-
-
-        const fieldError = validateField(name, value);
+        setFormData((prev) => {
+            if (prev[name] === value) return prev; // Avoid unnecessary state updates
+            return { ...prev, [name]: value };
+        });
 
         setErrors((prevErrors) => {
-            if (value.length === 0) {
+            if (!value.length) {
                 const { [name]: _, ...rest } = prevErrors; // Remove error when input is empty
                 return rest;
             }
-            return {
-                ...prevErrors,
-                [name]: fieldError
-            };
+            return { ...prevErrors, [name]: validateField(name, value) };
         });
-    };
+    }, []);
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
+        const newErrors = validateForm(formData);
+        setErrors(newErrors);
 
-        const newErrors = validateForm(formData); // Validate full form
-
-        setErrors(newErrors); // Show all errors on submit
-
-        if (Object.keys(newErrors).length > 0) {
-            return; // Stop submission if there are errors
-        }
+        if (Object.keys(newErrors).length > 0) return;
 
         setShowCheck(true);
-        setTimeout(() => {
-            setStartAnimation(true);
-        }, 1000);
+        setTimeout(() => setStartAnimation(true), 1000);
+    }, [formData]);
 
-        setTimeout(() => {
-            setShowCheck(false);
-            setStartAnimation(false);
-            setStep(1);
-        }, 3000);
+    // ✅ Manage submission animation state using useEffect
+    useEffect(() => {
+        if (showCheck) {
+            const resetTimeout = setTimeout(() => {
+                setShowCheck(false);
+                setStartAnimation(false);
+                setStep(1);
+                setFormData(formInitialState);
+            }, 3000);
+            return () => clearTimeout(resetTimeout);
+        }
+    }, [showCheck, formInitialState]);
 
-        console.log("Form submitted:", formData);
-    };
 
-
-    const handleNext = () => {
-        setStep(step + 1);
-    };
-
-    const handleBack = () => {
-        setStep(step - 1);
-    };
+    const handleNext = useCallback(() => setStep((prev) => prev + 1), []);
+    const handleBack = useCallback(() => setStep((prev) => prev - 1), []);
 
 
     return (
