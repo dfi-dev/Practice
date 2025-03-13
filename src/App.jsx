@@ -8,21 +8,22 @@ import Donate from './pages/Donate';
 import Notifications from "./components/Notifications.jsx";
 import PhotoGrid from "./components/PhotoGrid.jsx";
 import Signup from "./pages/Signup.jsx";
-// import AuthForm from "./components/AuthForm.jsx";
+import Login from "./pages/Login.jsx";
+
 
 
 const App = () => {
     return <>
         {/*<Header></Header>*/}
-        {/*    <Notifications/>*/}
+        {/*<Notifications/>*/}
         {/*<Welcome/>*/}
         {/*<About/>*/}
         {/* <Contact/>*/}
         {/* <TopDonors/> */}
         {/* <Donate/>*/}
         {/*<Footer/>*/}
-        <Signup/>
-        {/*<AuthForm/>*/}
+        {/*<Signup/>*/}
+        <Login/>
     </>
 };
 
