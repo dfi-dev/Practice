@@ -1,7 +1,7 @@
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";;
 import {PiSealCheckFill, PiSealWarningFill} from "react-icons/pi";
 
-export default function PasswordField({ name, value, onChange, error, togglePassword, showPassword, shouldValidate = true, onHover = [] }) {
+export default function PasswordField({ name, placeholder, icon, value, onChange, error, togglePassword, showPassword, shouldValidate = true, onHover = [] }) {
     const [hoveredField, setHoveredField] = Array.isArray(onHover) ? onHover : [null, () => {}];
 
     return (
@@ -15,7 +15,7 @@ export default function PasswordField({ name, value, onChange, error, togglePass
             <input
                 type={showPassword ? "text" : "password"}
                 name = {name}
-                placeholder="Password"
+                placeholder={placeholder}
                 value={value}
                 onChange={onChange}
                 className="w-full py-[9px] px-[14px] border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10c1bb] text-sm pr-10"
@@ -26,7 +26,7 @@ export default function PasswordField({ name, value, onChange, error, togglePass
                 onMouseEnter={() => setHoveredField(name)}
                 onMouseLeave={() => setHoveredField(null)}
             >
-                {value > 0 ? (showPassword ? <FaEyeSlash /> : <FaEye />) : <FaLock />}
+                {value > 0 ? (showPassword ? <FaEyeSlash /> : <FaEye />) : icon}
             </span>
             {/* Show error icon only if shouldValidate is true */}
             {shouldValidate && error ? (
@@ -35,7 +35,7 @@ export default function PasswordField({ name, value, onChange, error, togglePass
                      onMouseLeave={() => setHoveredField(null)}>
                     <PiSealWarningFill className="w-[14px] h-[14px] text-red-500" />
                 </div>
-            ) : shouldValidate && value && !error ? ( // Show success icon only if field has value and no error
+            ) : shouldValidate && value && !error ? (
                 <PiSealCheckFill className="absolute right-[6px] top-[6px] w-[14px] h-[14px] text-green-500" />
             ) : null }
         </div>

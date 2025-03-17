@@ -45,9 +45,7 @@ const Login = () => {
 
     return (
         <div className="flex h-screen items-center justify-center p-4">
-            <div className="w-full max-w-[400px] px-6 py-16 rounded-xl shadow-[10px_10px_20px_rgba(0,0,0,0.3)] flex flex-col relative overflow-hidden
-    before:w-24 before:h-24 before:absolute before:bg-purple-600 before:rounded-full before:-z-10 before:blur-2xl before:top-[-20px] before:left-[-20px]
-    after:w-32 after:h-32 after:absolute after:bg-sky-400 after:rounded-full after:-z-10 after:blur-2xl after:bottom-[-20px] after:right-[-20px]">
+            <div className="w-full max-w-[400px] bg-white p-6 rounded-xl shadow-lg flex flex-col py-16">
 
             <h2 className="text-2xl font-bold text-gray-700 text-center mb-6">Welcome Back</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
@@ -73,12 +71,12 @@ const Login = () => {
                     />
                     <motion.button
                         type="submit"
-                        className="flex items-center justify-center w-full bg-gradient-to-r from-purple-600 via-purple-400 to-blue-500 text-white p-[9px] rounded-lg text-sm font-[500] gap-2"
+                        className="flex items-center justify-center w-full bg-gradient-to-r from-green-500 to-[#10c1bb] text-white p-[9px] rounded-lg text-sm font-[500] gap-2"
                         whileHover={{ scale: 1.04 }}>
                         <motion.span
                             animate={
                                 isPasswordCorrect
-                                    ? { y: [0, -5, 0], rotate: [0, 15, -15, 0] } // Bouncing & rotating effect
+                                    ? { y: [0, -5, 0], rotate: [0, 15, -15, 0] }
                                     : { rotate: 0 }
                             }
                             transition={{ duration: 0.5, repeat: 0, repeatType: "reverse" }}>

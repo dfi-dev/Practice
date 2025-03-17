@@ -22,8 +22,8 @@ const App = () => {
         {/* <TopDonors/> */}
         {/* <Donate/>*/}
         {/*<Footer/>*/}
-        {/*<Signup/>*/}
-        <Login/>
+        <Signup/>
+        {/*<Login/>*/}
     </>
 };
 
