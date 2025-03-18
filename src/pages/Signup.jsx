@@ -9,6 +9,8 @@ import SelectField from "../components/SelectField.jsx";
 import {validateForm} from "../utils/validateForm.js";
 import SocialButton from "../components/SocialButton.jsx";
 import StepTracker from "../components/StepTracker.jsx";
+import Modal from "../components/Modal.jsx";
+import Loader from "../components/Loader.jsx";
 
 
 export default function Signup() {
@@ -19,11 +21,13 @@ export default function Signup() {
 
     const [formData, setFormData] = useState(formInitialState);
     const [step, setStep] = useState(1);
-    const [showWait, setShowCheck] = useState(false);
-    const [showCheck, setStartAnimation] = useState(false);
+    const [showWait, setShowWait] = useState(false);
+    const [showCheck, setShowCheck] = useState(false);
     const [errors, setErrors] = useState({});
     const [hoveredField, setHoveredField] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
+    const [modal, setModal] = useState({ show: false, type: "error", message: "" });
+    const [showLoader, setShowLoader] = useState(false);
 
 
     const handleChange = useCallback((e) => {
@@ -70,22 +74,26 @@ export default function Signup() {
 
 
     const handleSubmit = useCallback((e) => {
+        setShowLoader(true);
         e.preventDefault();
         const newErrors = validateForm(formData);
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length > 0) return;
 
-        setShowCheck(true);
-        setTimeout(() => setStartAnimation(true), 1000);
+        setShowWait(true);
+        setTimeout(() => {
+            setShowCheck(true);
+        }, 1000);
     }, [formData]);
 
 
     useEffect(() => {
         if (showWait) {
             const resetTimeout = setTimeout(() => {
+                setShowWait(false);
                 setShowCheck(false);
-                setStartAnimation(false);
+
                 // setStep(1);
                 // setFormData(formInitialState);
             }, 3000);
@@ -101,7 +109,7 @@ export default function Signup() {
     return (
         <div className="flex h-screen items-center justify-center p-4">
             <div
-                className="w-full max-w-[400px] bg-[#ffe2e2]  px-8 py-14 rounded-xl shadow-[10px_10px_20px_rgba(0,0,0,0.3)] flex flex-col">
+                className="w-full max-w-[400px] bg-[#ffe2e2] px-8 py-14 rounded-xl shadow-[10px_10px_20px_rgba(0,0,0,0.3)] flex flex-col">
                 {/* Step Indicator */}
                 <StepTracker step={step}/>
 
@@ -118,7 +126,7 @@ export default function Signup() {
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: step === 1 ? -50 : 50, scale: 0.9 }}
                         transition={{ duration: 0.5, ease: "easeInOut" }}
-                        className="space-y-3"
+                        className="space-y-3 min-h-[200px]"
                     >
                         {step === 1 && (
                             <>
@@ -353,6 +361,7 @@ export default function Signup() {
                 <div className="my-2 text-center text-gray-600 text-sm">Or sign up with</div>
                 <SocialButton/>
             </div>
+            {showLoader ? <Loader/> : modal.show && <Modal type={modal.type} message={modal.message} showLoader={modal.showLoader} onClose={() => setModal({ show: false })} />}
         </div>
     );
 }
