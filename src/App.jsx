@@ -1,14 +1,17 @@
-import Footer from './components/Footer'
-import Welcome from './pages/Welcome.jsx';
-import Header from './components/Header';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import TopDonors from './pages/TopDonors';
-import Donate from './pages/Donate';
-import Notifications from "./components/Notifications.jsx";
-import PhotoGrid from "./components/PhotoGrid.jsx";
-import Signup from "./pages/Signup.jsx";
-import Login from "./pages/Login.jsx";
+import Footer from "./components/Layout/Footer.jsx";
+import Header from "./components/Layout/Header.jsx";
+import Notifications from "./components/Notifications/Notifications.jsx";
+import PhotoGrid from "./components/Gallery/PhotoGrid.jsx";
+
+import Welcome from "./pages/Welcome.jsx";
+import About from "./pages/About.jsx";
+import Contact from "./pages/Contact.jsx";
+import TopDonors from "./pages/TopDonors.jsx";
+import Donate from "./pages/Donate.jsx";
+import Signup from "./backup/Signup.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import SignupPage from "./pages/SignupPage.jsx";
+
 
 
 
@@ -22,8 +25,8 @@ const App = () => {
         {/* <TopDonors/> */}
         {/* <Donate/>*/}
         {/*<Footer/>*/}
-        <Signup/>
-        {/*<Login/>*/}
+        {/*<SignupPage/>*/}
+        <LoginPage/>
     </>
 };
 

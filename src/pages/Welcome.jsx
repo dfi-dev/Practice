@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Testimonial from "../components/Testimonial.jsx";
+import Testimonial from "../components/Testimonials/Testimonial.jsx";
 import {FaArrowPointer} from "react-icons/fa6";
 import {FaHandsHelping, FaUsers} from "react-icons/fa";
 import { Ri24HoursFill } from "react-icons/ri";

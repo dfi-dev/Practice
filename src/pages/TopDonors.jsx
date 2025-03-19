@@ -81,7 +81,7 @@ const TopDonors = () => {
             />
           </div>
 
-          {/* Apply Filter Button */}
+          {/* Apply Filter AnimatedButton */}
           <button className="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-sm text-white font-semibold rounded-lg hover:bg-indigo-700 transition">
             Apply Filter
           </button>

@@ -44,7 +44,7 @@ export default function Header() {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu AnimatedButton */}
           <div className="flex lg:hidden">
             <button
               type="button"
@@ -65,11 +65,11 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Right Side (Login/Notifications/Profile) */}
+          {/* Right Side (LoginPage/Notifications/Profile) */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-4">
             {isLoggedIn ? (
               <>
-                {/* Notification Button */}
+                {/* Notification AnimatedButton */}
                 <button
                     onClick={toggleNotifications}
                     className="relative p-2 rounded-full text-gray-700  focus:outline-none focus:ring-2 focus:ring-white"

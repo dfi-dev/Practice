@@ -65,7 +65,7 @@ const Donate = () => {
           ))}
         </div>
 
-        {/* Donate Button */}
+        {/* Donate AnimatedButton */}
         <button className="mt-6 px-5 py-2 flex items-center gap-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition mx-auto">
           <BiDonateHeart className="text-xl" /> Donate Now
         </button>

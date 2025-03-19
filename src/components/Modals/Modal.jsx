@@ -36,7 +36,7 @@ const Modal = ({ type = "error", message = "Something went wrong!", onClose}) =>
                 className="relative w-[90%] max-w-[320px] sm:max-w-[380px] p-6 rounded-lg shadow-2xl border border-gray-200 bg-white"
             >
                 <div className="flex flex-col items-center text-center">
-                    {/* Close Button */}
+                    {/* Close AnimatedButton */}
                     <button
                         onClick={onClose}
                         className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 transition-transform transform hover:scale-110"
@@ -50,7 +50,7 @@ const Modal = ({ type = "error", message = "Something went wrong!", onClose}) =>
                     {/* Message */}
                     <p className="text-lg font-semibold text-gray-800 mt-3">{message}</p>
 
-                    {/* Close Button */}
+                    {/* Close AnimatedButton */}
                     <button
                         onClick={onClose}
                         className={`mt-4 px-4 py-[5px] bg-gradient-to-r ${types[type].buttonColor}  text-white rounded-md transition`}

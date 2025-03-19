@@ -1,16 +1,18 @@
-import {useCallback, useEffect, useMemo, useState} from "react";
-import {motion} from "framer-motion";
-import {FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaVenusMars, FaAt, FaCalendarAlt, FaLock, FaCheckCircle, FaHourglassEnd} from "react-icons/fa";
-import {MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight} from "react-icons/md";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import {FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaVenusMars, FaAt, FaCalendarAlt, FaLock, FaCheckCircle } from "react-icons/fa";
+import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import validateField from "../utils/validateField.js";
-import InputField from "../components/InputField.jsx";
-import PasswordField from "../components/PasswordField.jsx";
-import SelectField from "../components/SelectField.jsx";
-import {validateForm} from "../utils/validateForm.js";
-import SocialButton from "../components/SocialButton.jsx";
-import StepTracker from "../components/StepTracker.jsx";
-import Modal from "../components/Modal.jsx";
-import Loader from "../components/Loader.jsx";
+import { validateForm } from "../utils/validateForm.js";
+import InputField from "../components/UI/InputField.jsx";
+import PasswordField from "../components/UI/PasswordField.jsx";
+import SelectField from "../components/UI/SelectField.jsx";
+import SocialButton from "../components/UI/SocialButton.jsx";
+import AnimatedButton from "../components/UI/AnimatedButton.jsx";
+import StepTracker from "../components/Forms/StepTracker.jsx";
+import Modal from "../components/Modals/Modal.jsx";
+import Loader from "../components/Loaders/Loader.jsx";
+
 
 
 export default function Signup() {
@@ -21,8 +23,6 @@ export default function Signup() {
 
     const [formData, setFormData] = useState(formInitialState);
     const [step, setStep] = useState(1);
-    const [showWait, setShowWait] = useState(false);
-    const [showCheck, setShowCheck] = useState(false);
     const [errors, setErrors] = useState({});
     const [hoveredField, setHoveredField] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
@@ -32,13 +32,6 @@ export default function Signup() {
 
     const handleChange = useCallback((e) => {
         const { name, value } = e.target;
-        if(name === "password"){
-            console.log(`value of ${name} is ${value}`)
-            console.log(`and value of confirmPassword is ${formData.confirmPassword}`)
-        }if(name === "confirmPassword"){
-            console.log(`value of ${name} is ${value}`)
-            console.log(formData.password)
-        }
 
         setFormData((prev) => {
             if (prev[name] === value) return prev; // Avoid unnecessary state updates
@@ -81,25 +74,20 @@ export default function Signup() {
 
         if (Object.keys(newErrors).length > 0) return;
 
-        setShowWait(true);
         setTimeout(() => {
-            setShowCheck(true);
         }, 1000);
     }, [formData]);
 
 
     useEffect(() => {
-        if (showWait) {
+        if (showLoader) {
             const resetTimeout = setTimeout(() => {
-                setShowWait(false);
-                setShowCheck(false);
-
                 // setStep(1);
                 // setFormData(formInitialState);
             }, 3000);
             return () => clearTimeout(resetTimeout);
         }
-    }, [showWait, formInitialState]);
+    }, [showLoader, formInitialState]);
 
 
     const handleNext = useCallback(() => setStep((prev) => prev + 1), []);
@@ -167,18 +155,14 @@ export default function Signup() {
 
 
                                 <div className="relative">
-                                    <motion.button
-                                        type="button"
+                                    <AnimatedButton
                                         onClick={handleNext}
-                                        className="flex items-center justify-center w-full bg-[#12b9b3] text-white p-[9px] rounded-lg hover:bg-[#10c1bb] text-sm font-[500] gap-1"
-                                        whileHover={{scale: 1.04}}
+                                        Icon={MdOutlineKeyboardDoubleArrowRight}
+                                        iconAnimation={{ x: [0, 4, 0] }}
+                                        iconPosition="after"
                                     >
                                         Next
-                                        <motion.span
-                                            animate={{x: [0, 4, 0]}} // Moves forward and comes back
-                                            transition={{duration: 0.8, repeat: Infinity}}
-                                        ><MdOutlineKeyboardDoubleArrowRight className="text-lg"/></motion.span>
-                                    </motion.button>
+                                    </AnimatedButton>
                                 </div>
                             </>
                         )}
@@ -231,33 +215,22 @@ export default function Signup() {
                                 />
 
                                 <div className="relative flex w-full gap-4">
-                                    <motion.button
-                                        type="button"
-                                        onClick={handlePrev} // Assuming one is a "Previous" button
-                                        className="flex items-center justify-center w-full bg-[#12b9b3] text-white p-[9px] rounded-lg hover:bg-[#10c1bb] text-sm font-[500] gap-1"
-                                        whileHover={{ scale: 1.04 }}
+                                    <AnimatedButton
+                                        onClick={handlePrev}
+                                        Icon={MdOutlineKeyboardDoubleArrowLeft}
+                                        iconAnimation={{ x: [0, 4, 0] }}
                                     >
-                                        <motion.span
-                                            animate={{x: [0, 4, 0]}} // Moves forward and comes back
-                                            transition={{duration: 0.8, repeat: Infinity}}
-                                        ><MdOutlineKeyboardDoubleArrowLeft className="text-lg mr-[4px]"/></motion.span>
                                         Prev
-                                    </motion.button>
+                                    </AnimatedButton>
 
-                                    <motion.button
-                                        type="button"
+                                    <AnimatedButton
                                         onClick={handleNext}
-                                        className="flex items-center justify-center w-full bg-[#12b9b3] text-white p-[9px] rounded-lg hover:bg-[#10c1bb] text-sm font-[500] gap-1"
-                                        whileHover={{ scale: 1.04 }}
+                                        Icon={MdOutlineKeyboardDoubleArrowRight}
+                                        iconAnimation={{ x: [0, 4, 0] }}
+                                        iconPosition="after"
                                     >
                                         Next
-                                        <motion.span
-                                            animate={{ x: [0, 4, 0] }} // Moves forward and comes back
-                                            transition={{ duration: 0.8, repeat: Infinity }}
-                                        >
-                                            <MdOutlineKeyboardDoubleArrowRight className="text-lg" />
-                                        </motion.span>
-                                    </motion.button>
+                                    </AnimatedButton>
                                 </div>
 
                             </>
@@ -297,56 +270,20 @@ export default function Signup() {
                                 />
 
                                 <div className="relative flex w-full gap-4">
-                                    <motion.button
-                                        type="button"
-                                        onClick={handlePrev} // Assuming one is a "Previous" button
-                                        className="flex items-center justify-center w-1/2 bg-[#12b9b3] text-white p-[9px] rounded-lg hover:bg-[#10c1bb] text-sm font-[500] gap-1"
-                                        whileHover={{ scale: 1.04 }}
+                                    <AnimatedButton
+                                        onClick={handlePrev}
+                                        Icon={MdOutlineKeyboardDoubleArrowLeft}
+                                        iconAnimation={{ x: [0, 4, 0] }}
                                     >
-                                        <motion.span
-                                            animate={{x: [0, 4, 0]}} // Moves forward and comes back
-                                            transition={{duration: 0.8, repeat: Infinity}}
-                                        ><MdOutlineKeyboardDoubleArrowLeft className="text-lg mr-[4px]"/></motion.span>
                                         Prev
-                                    </motion.button>
+                                    </AnimatedButton>
 
-                                    <motion.button
-                                        type="button"
+                                    <AnimatedButton
                                         onClick={handleSubmit}
-                                        className="flex items-center justify-center w-1/2 bg-[#12b9b3] text-white p-[9px] rounded-lg hover:bg-[#10c1bb] text-sm font-[500] gap-1"
-                                        whileHover={{scale: 1.04}}
-                                        disabled={showWait} // Disable button during animation
+                                        iconAnimation={{ x: [0, 4, 0] }}
                                     >
-                                        {showCheck ? (
-                                            <>
-                                                <motion.svg
-                                                    width="20"
-                                                    height="20"
-                                                    viewBox="0 0 32 32"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <motion.path
-                                                        d="M4 16L12 26L28 6"
-                                                        stroke="white"
-                                                        strokeWidth="5" /* Increased thickness */
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        initial={{ pathLength: 0, strokeWidth: 2 }}
-                                                        animate={{ pathLength: 1, strokeWidth: [2, 5, 4] }} /* Dynamic stroke effect */
-                                                        transition={{ duration: 1.2, ease: "easeInOut" }}
-                                                    />
-                                                </motion.svg>
-
-                                            </>
-                                        ) : showWait ? (
-                                            <span className="text-white text-lg"><FaHourglassEnd /></span>
-                                        ) : (
-                                            <>
-                                                Submit
-                                            </>
-                                        )}
-                                    </motion.button>
+                                        Submit
+                                    </AnimatedButton>
                                 </div>
                             </>
                         )}

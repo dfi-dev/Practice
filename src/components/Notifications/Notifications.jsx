@@ -38,7 +38,7 @@ const Notifications = () => {
 
     return (
         <div className="relative">
-            {/* Notification Button */}
+            {/* Notification AnimatedButton */}
             <button
                 onClick={() => {
                     setNotificationOpen(!notificationOpen);
