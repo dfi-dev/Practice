@@ -9,6 +9,8 @@ import {FaUnlockKeyhole} from "react-icons/fa6";
 const LoginForm = ({setFormData, onSubmit, isPasswordCorrect, formData}) => {
 
     const [showPassword, setShowPassword] = useState(false);
+    const [hoveredField, setHoveredField] = useState(null);
+
 
     const handleChange = useCallback((e) => {
         const { name, value } = e.target;
@@ -34,6 +36,7 @@ const LoginForm = ({setFormData, onSubmit, isPasswordCorrect, formData}) => {
         <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
             <InputField
                 name="username"
+                value={formData.username}
                 type="text"
                 placeholder="Username"
                 icon={<FaAt/>}
@@ -44,12 +47,16 @@ const LoginForm = ({setFormData, onSubmit, isPasswordCorrect, formData}) => {
             />
             <PasswordField
                 name="password"
+                placeholder="Password"
+                value={formData.password}
+                icon= {<FaLock/>}
                 onChange={handleChange}
                 showPassword={showPassword}
                 togglePassword={() => setShowPassword((prev) => !prev)}
                 shouldValidate={false}
-                onHover={[]}
+                onHover={[hoveredField, setHoveredField]}
             />
+
             <motion.button
                 type="submit"
                 className="flex items-center justify-center w-full bg-[#10c1bb] text-white p-[9px] rounded-lg text-sm font-[500] gap-2"

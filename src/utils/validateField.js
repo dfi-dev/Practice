@@ -22,9 +22,11 @@ const validateField = (fieldName, fieldValue, formData) => {
         case "username":
             return fieldValue.length > 0 ? "" : "Username is required";
         case "dob":
-            return fieldValue ? "" : "Date of birth is required";
+            return fieldValue ? "" : "Date is required";
         case "gender":
             return fieldValue ? "" : "Gender is required";
+        case "userType":
+            return ["admin", "donor", "recipient"].includes(fieldValue) ? "" : "Invalid user type";
         default:
             return "";
     }

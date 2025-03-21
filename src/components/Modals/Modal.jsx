@@ -33,7 +33,7 @@ const Modal = ({ type = "error", message = "Something went wrong!", onClose}) =>
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="relative w-[90%] max-w-[320px] sm:max-w-[380px] p-6 rounded-lg shadow-2xl border border-gray-200 bg-white"
+                className="relative w-[90%] sm:max-w-[400px] px-10 py-10 rounded-lg shadow-2xl border border-gray-200 bg-white"
             >
                 <div className="flex flex-col items-center text-center">
                     {/* Close AnimatedButton */}

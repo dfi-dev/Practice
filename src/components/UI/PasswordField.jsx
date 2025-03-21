@@ -18,6 +18,7 @@ export default function PasswordField({ name, placeholder, icon, value, onChange
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
+                autoComplete="true"
                 className="w-full py-[9px] px-[14px] border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#10c1bb] text-sm pr-10"
             />
             <span

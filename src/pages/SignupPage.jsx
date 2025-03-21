@@ -8,7 +8,7 @@ import {validateForm} from "../utils/validateForm.js";
 export default function SignupPage() {
 
     const formInitialState = useMemo(() => ({
-        fullName: "", username: "", email: "", phone: "",
+        fullName: "", userType: "", email: "", phone: "",
         password: "", confirmPassword: "", dob: "", gender: "", address: "", bloodGroup: ""
     }), []);
 

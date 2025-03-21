@@ -1,7 +1,6 @@
-import {useCallback, useState} from "react";
+import {useCallback, useRef, useState} from "react";
 import SocialButton from "../components/UI/SocialButton.jsx";
 import LoginForm from "../components/Forms/LoginForm.jsx";
-import {validateForm} from "../utils/validateForm.js";
 import Modal from "../components/Modals/Modal.jsx";
 
 
@@ -12,25 +11,36 @@ const LoginPage = () => {
         password: "",
     });
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
-    const [showModel, setShowModel] = useState(false);
+    const [modal, setModal] = useState({show: false, type: "", message: ""})
+    const loginTimeoutRef = useRef(null);
+
 
     const handleLogin = useCallback(() => {
-        const newErrors = validateForm(formData);
-        if(Object.keys(newErrors).length > 0){
-            setShowModel(true);
+        setIsPasswordCorrect(() => {
+            const newValue = formData.username === "admin" && formData.password === "123";
 
-        }
-        console.log("Current formData:", formData); // ✅ This will log the latest formData
+            if (loginTimeoutRef.current) {
+                clearTimeout(loginTimeoutRef.current);
+            }
 
-        setIsPasswordCorrect(formData.username === "admin" && formData.password === "123");
+            loginTimeoutRef.current = setTimeout(() => {
+                setModal({
+                    show: true,
+                    message: newValue ? "Login Success!" : "Invalid credentials",
+                    type: newValue ? "success" : "error"
+                });
+                newValue && setFormData({ username: "", password: "" });
+            }, 1000);
+
+            return newValue;
+        });
     }, [formData]);
 
+
     const onClose = () => {
-        setShowModel(false);
-    }
-
-
-
+        setIsPasswordCorrect(false);
+        setModal({ show: false, type: "", message: "" });
+    };
 
     return (
         <div className="flex h-screen items-center justify-center p-4">
@@ -49,7 +59,7 @@ const LoginPage = () => {
                 <div className="my-2 text-center text-gray-600 text-sm">Or login with</div>
                 <SocialButton/>
             </div>
-            {showModel && <Modal message="Validation Failed!" onClose={onClose}/>}
+            {modal.show && <Modal message={modal.message} type={modal.type} onClose={onClose}/>}
         </div>
     );
 }

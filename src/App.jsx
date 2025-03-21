@@ -11,8 +11,7 @@ import Donate from "./pages/Donate.jsx";
 import Signup from "./backup/Signup.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
-
-
+import BloodDonationForm from "./components/Forms/BloodDonationForm.jsx";
 
 
 const App = () => {
@@ -25,8 +24,9 @@ const App = () => {
         {/* <TopDonors/> */}
         {/* <Donate/>*/}
         {/*<Footer/>*/}
+        <BloodDonationForm/>
         {/*<SignupPage/>*/}
-        <LoginPage/>
+        {/*<LoginPage/>*/}
     </>
 };
 

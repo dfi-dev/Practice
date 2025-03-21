@@ -9,7 +9,6 @@ import PasswordField from "../components/UI/PasswordField.jsx";
 import SelectField from "../components/UI/SelectField.jsx";
 import SocialButton from "../components/UI/SocialButton.jsx";
 import AnimatedButton from "../components/UI/AnimatedButton.jsx";
-import StepTracker from "../components/Forms/StepTracker.jsx";
 import Modal from "../components/Modals/Modal.jsx";
 import Loader from "../components/Loaders/Loader.jsx";
 

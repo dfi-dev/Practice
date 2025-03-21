@@ -1,14 +1,14 @@
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaVenusMars, FaAt, FaCalendarAlt, FaLock, FaCheckCircle } from "react-icons/fa";
+import {FaUser, FaEnvelope, FaMapMarkerAlt, FaVenusMars, FaCalendarAlt, FaLock, FaIdBadge} from "react-icons/fa";
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import validateField from "../../utils/validateField.js";
 import InputField from "../UI/InputField.jsx";
 import PasswordField from "../UI/PasswordField.jsx";
 import SelectField from "../UI/SelectField.jsx";
 import AnimatedButton from "../UI/AnimatedButton.jsx";
-import StepTracker from "./StepTracker.jsx";
-import {validateForm} from "../../utils/validateForm.js";
+import {ImPhone} from "react-icons/im";
+import CustomDatePicker from "../UI/CustomDatePicker.jsx";
 
 
 const SignupForm = ({ formData, setFormData, errors, setErrors, onSubmit }) => {
@@ -62,11 +62,10 @@ const SignupForm = ({ formData, setFormData, errors, setErrors, onSubmit }) => {
 
     return (
         <>
-        <StepTracker step={step}/>
 
         <div className="flex justify-between items-center mb-8">
-            <h2 className="font-bold text-sm text-gray-700 text-center w-full flex items-center justify-center gap-2 uppercase">
-                {step === 1 ? "Create Your Account" : step === 2 ? "Personal Information" : "Contact Details"}
+            <h2 className="text-2xl text-gray-700 text-center w-full flex items-center justify-center gap-2">
+                {step === 1 ? "Let's Get Started!" : step === 2 ? "You're Almost There!" : "Final Step!"}
             </h2>
         </div>
 
@@ -82,13 +81,13 @@ const SignupForm = ({ formData, setFormData, errors, setErrors, onSubmit }) => {
                 {step === 1 && (
                     <>
                         <InputField
-                            name="username"
-                            type="text"
-                            placeholder="Username"
-                            icon={<FaAt/>}
-                            value={formData.username}
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            icon={<FaEnvelope/>}
+                            value={formData.email}
                             onChange={handleChange}
-                            error={errors.username}
+                            error={errors.email}
                             onHover={[hoveredField, setHoveredField]}
                         />
 
@@ -107,7 +106,7 @@ const SignupForm = ({ formData, setFormData, errors, setErrors, onSubmit }) => {
                         <PasswordField
                             name="confirmPassword"
                             placeholder={"Confirm Password"}
-                            icon = {<FaCheckCircle />}
+                            icon = {<FaLock />}
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             showPassword={showPassword}  // Pass current state
@@ -136,29 +135,21 @@ const SignupForm = ({ formData, setFormData, errors, setErrors, onSubmit }) => {
                             name="fullName"
                             type="text"
                             placeholder="Full Name"
-                            icon={<FaUser/>}
+                            icon={<FaIdBadge/>}
                             value={formData.fullName}
                             onChange={handleChange}
                             error={errors.fullName}
                             onHover={[hoveredField, setHoveredField]}
                         />
 
-                        <InputField
-                            type="date"
+                        <CustomDatePicker
                             name="dob"
                             placeholder="Date of Birth"
-                            icon={<FaCalendarAlt/>}
                             value={formData.dob}
-                            onChange={handleChange}
-                            error={errors.dob}
                             onHover={[hoveredField, setHoveredField]}
-                            extraProps={{
-                                style: {
-                                    appearance: "none",
-                                    WebkitAppearance: "none",
-                                    MozAppearance: "none",
-                                },
-                            }}
+                            error={errors.dob}
+                            shouldValidate={true}
+                            onChange={handleChange}
                         />
 
                         <SelectField
@@ -201,21 +192,11 @@ const SignupForm = ({ formData, setFormData, errors, setErrors, onSubmit }) => {
 
                 {step === 3 && (
                     <>
-                        <InputField
-                            name="email"
-                            type="email"
-                            placeholder="Email"
-                            icon={<FaEnvelope/>}
-                            value={formData.email}
-                            onChange={handleChange}
-                            error={errors.email}
-                            onHover={[hoveredField, setHoveredField]}
-                        />
 
                         <InputField
                             name="phone" type="phone"
                             placeholder="Phone"
-                            icon={<FaPhone/>}
+                            icon={<ImPhone/>}
                             value={formData.phone}
                             onChange={handleChange}
                             error={errors.phone}
@@ -230,6 +211,22 @@ const SignupForm = ({ formData, setFormData, errors, setErrors, onSubmit }) => {
                             onChange={handleChange}
                             error={errors.address}
                             onHover={[hoveredField, setHoveredField]}
+                        />
+
+                        <SelectField
+                            name="userType"
+                            icon={<FaUser/>}
+                            value={formData.userType}
+                            onChange={handleChange}
+                            onHover={[hoveredField, setHoveredField]}
+                            error={errors.userType}
+                            options={[
+                                { value: "", label: "User Type" },
+                                { value: "admin", label: "Admin" },
+                                { value: "donor", label: "Donor" },
+                                { value: "recipient", label: "Recipient" }
+                            ]}
+                            required
                         />
 
                         <div className="relative flex w-full gap-4">
